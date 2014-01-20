@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+/*
+ * integration tests
+ */
+sourceSets {
+  integrationTest {
+    compileClasspath = sourceSets.main.output + configurations.testRuntime
+    runtimeClasspath = output + sourceSets.main.output + configurations.testRuntime
+    java {
+      srcDir 'src/integrationTest/java'
+    }
+  }
+}
+
+task integrationTest(type: Test) {
+  testClassesDir = sourceSets.integrationTest.output.classesDir
+  classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+/*
+ * Project cleaner. Run before "git commit"
+ */
+task cleanAndClear(dependsOn: [
+    cleanEclipse,
+    cleanIdea,
+    cleanIdeaWorkspace,
+    clean
+]) {
+    delete 'bin', 'out', '.idea', '.settings'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
+
+repositories {
+   mavenCentral()
+}
+
+
+dependencies {
+   testCompile group: 'junit', name: 'junit', version: '4.8.+'
+   compile 'org.mockito:mockito-all:1.9.5'
+   compile fileTree (dir: 'lib', includes: ['*.jar'])
+}
+
