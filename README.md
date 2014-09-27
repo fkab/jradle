@@ -1,4 +1,3 @@
 jradle
 ======
-
-Boilerplate Java project using Gradle
+Boilerplate Java project using Gradle.
