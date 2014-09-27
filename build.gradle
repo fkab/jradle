@@ -33,7 +33,7 @@ task cleanAndClear(dependsOn: [
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
+    gradleVersion = '2.1'
 }
 
 repositories {
